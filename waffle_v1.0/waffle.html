@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>.waffle</title>
+    <link rel="shortcut icon" href="logo_thumb.PNG">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="print.css" media="print">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  <body>
+    <img src = "logo-no-background.svg" alt="waffle logo" class="logo"/>
+    <div class="grid-container"></div>
+
+    <div class="add-panels-container">
+      <!-- buffers -->
+      <div class="add-ph-panel">
+        <input type="submit" value="Add Buffer">
+        <form id="add-ph-form">
+          <label for="buffer-select">    Buffer:</label>
+          <input type="text" id="buffer-input-filter" placeholder="Filter Buffers...">
+          <label></label>
+          <select id="buffer-select" required>
+            <option value="">-- Select Buffer --</option>
+          </select>
+          
+          <br>
+ 
+          <label for="buffer-value-input">    [Buffer]:</label>
+          <input type="number" id="buffer-value-input">
+
+          <br>
+
+          <label for="min-ph-input">    Minimum pH:</label>
+          <input type="number" id="min-ph-input" step="0.01" min="0" max="14" required>
+
+          <br>
+
+          <label for="max-ph-input">    Maximum pH:</label>
+          <input type="number" id="max-ph-input" step="0.01" min="0" max="14" required>
+
+          <br>
+
+          <label for="gradient-direction-select-ph">    Gradient Direction:</label>
+          <select id="gradient-direction-select-ph" required>
+            <option value="">-- Select Direction --</option>
+            <option value="up">Bottom -> Top</option>
+            <option value="down">Top -> Bottom</option>
+            <option value="left">Right -> Left</option>
+            <option value="right">Left -> Right</option>
+          </select>
+      
+        </form>
+      </div>
+      <!-- Reagents -->
+      <div class="add-component-panel">
+        <input type="submit" value="Add Component">
+        <form id="add-component-form">
+          <label for="component-select">    Component:</label>
+          <input type="text" id="component-input-filter" placeholder="Filter Components...">
+          <label></label>
+          <select id="component-select" required>
+            <option value="">-- Select Component --</option>
+          </select>
+          
+          <br>
+
+          <label for="min-value-input">    [Minimum]:</label>
+          <input type="number" id="min-value-input" required>
+          <br>
+
+          <label for="max-value-input">    [Maximum]:</label>
+          <input type="number" id="max-value-input" required>
+          <br>
+          <br>
+
+          <label for="gradient-direction-select">    Gradient Direction:</label>
+          <select id="gradient-direction-select" required>
+            <option value="">-- Select Direction --</option>
+            <option value="up">Bottom -> Top</option>
+            <option value="down">Top -> Bottom</option>
+            <option value="left">Right -> Left</option>
+            <option value="right">Left -> Right</option>
+          </select>
+    
+          
+          
+        </form>
+      </div>
+
+      <!-- added components -->
+      <div class="component-list-panel">
+        <h2>Added Reagents</h2>
+        <ul id="added-components-list"></ul>
+      </div>
+
+      <div class="export-csv-panel">
+        <!--<h2>Export as CSV</h2> 
+        <button class="print-button" onclick=" window.open('print.html','_blank')">Print Grid</button> -->
+        <label for="name-input">File Name:</label>
+        <input type="text" id="name-input" required value="grid_data">
+        <br>
+        
+        <button id="export-button" type="button">Export csv</button>
+        
+        <br>
+
+        <!--<h2>Rebuild Grid</h2> -->
+        <label for="rows-input">Rows:</label>
+        <input type="number" id="rows-input" required value="8">
+        <br>
+        <label></label>
+        <label for="cols-input">Columns:</label>
+        <input type="number" id="cols-input" required value="12">
+        <br>
+        <button id="rebuild-button" type="button">Flip Waffle</button>
+      </div>
+
+
+    </div>
+
+    
+
+    <script src="script.js"></script>  
+  </body>
+  <footer>
+    <p>
+      <b>W</b> - Wizardly Assisted<br>
+      <b>A</b> - Art of<br>
+      <b>F</b> - Formulating<br>
+      <b>F</b> - Fabulous<br>
+      <b>L</b> - Large<br>
+      <b>E</b> - Enigmatic crystals<br><br> 
+    a crystallization optimization tool by Nicholas DeBouver </p>
+  </footer>
+</html>
