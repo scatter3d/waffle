@@ -55,7 +55,7 @@ const rebuildButton = document.querySelector("#rebuild-button");
 rebuildButton.addEventListener("click", () => { 
   const rows_input = document.querySelector("#rows-input");
   const cols_input = document.querySelector("#cols-input");
-
+  
   gridContainer.innerHTML = "";
   addedComponents = {};
 
@@ -68,6 +68,9 @@ rebuildButton.addEventListener("click", () => {
   });
 
   buildGrid(rows_input.value,cols_input.value);
+  
+  // Add event listeners to the new cells
+  addCellEventListeners();
 
 });
 
@@ -98,34 +101,51 @@ let selectedCells = [];
 let startCell = null;
 let endCell = null;
 
-// Handle grid cell click events to select cells for highlighting
-const cells = document.querySelectorAll(".grid-cell");
-cells.forEach((cell) => {
-  cell.addEventListener("mousedown", () => {
-    // If there are already two cells selected, reset the selection
-    if (selectedCells.length >= 2) {
+function addCellEventListeners() {
+  const cells = document.querySelectorAll(".grid-cell");
+  cells.forEach((cell) => {
+    cell.addEventListener("mousedown", () => {
+      // If there are already two cells selected, reset the selection
+      if (selectedCells.length >= 2) {
+        selectedCells.forEach((cell) => {
+          cell.classList.remove("highlighted");
+        });
+        selectedCells = [];
+        highlightedCells = [];
+        startCell = null;
+        endCell = null;
+      }
+
+      // Add the current cell to the selected cells array
+      selectedCells.push(cell);
+      cell.classList.add("highlighted");
+
+      // If two cells have been selected, highlight the cells in the rectangle they define
+      if (selectedCells.length === 2) {
+        startCell = selectedCells[0];
+        endCell = selectedCells[1];
+
+        highlightCells(startCell, endCell);
+      }
+    });
+
+    cell.addEventListener("dblclick", () => {
       selectedCells.forEach((cell) => {
         cell.classList.remove("highlighted");
       });
       selectedCells = [];
+      highlightedCells.forEach((cell) => {
+        cell.classList.remove("highlighted");
+      });
       highlightedCells = [];
       startCell = null;
       endCell = null;
-    }
-
-    // Add the current cell to the selected cells array
-    selectedCells.push(cell);
-    cell.classList.add("highlighted");
-
-    // If two cells have been selected, highlight the cells in the rectangle they define
-    if (selectedCells.length === 2) {
-      startCell = selectedCells[0];
-      endCell = selectedCells[1];
-
-      highlightCells(startCell, endCell);
-    }
+    });
   });
-});
+}
+
+// Call the function initially
+addCellEventListeners();
 
 function highlightCells(startCell, endCell) {
   // Remove the previous highlighted cells
@@ -155,23 +175,6 @@ function highlightCells(startCell, endCell) {
   }
 
 }
-
-
-// Handle grid cell double click events to reset the selection
-cells.forEach((cell) => {
-  cell.addEventListener("dblclick", () => {
-    selectedCells.forEach((cell) => {
-      cell.classList.remove("highlighted");
-    });
-    selectedCells = [];
-    highlightedCells.forEach((cell) => {
-      cell.classList.remove("highlighted");
-    });
-    highlightedCells = [];
-    startCell = null;
-    endCell = null;
-  });
-});
 
 
 // Get the add component button
