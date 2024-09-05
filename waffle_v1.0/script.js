@@ -609,6 +609,56 @@ function gradientCalc(minValue, maxValue, gradientDirection, selected_cells) {
         return {cell: currentCell, value: currentValue};
       });
     });
+  } else if (gradientDirection === 'step-wise') {
+    const totalCells = selectRows * selectCols;
+    const step = (maxValue - minValue) / (totalCells - 1);
+    let cellCounter = 0;
+    gradientValues = Array.from({length: selectRows}, (_, rowIndex) => {
+      return Array.from({length: selectCols}, (_, colIndex) => {
+        const currentValue = (minValue + (cellCounter * step)).toFixed(2);
+        const currentCell = String.fromCharCode(65 + minRowLetter + rowIndex) + (colIndex + Math.min(...selected_cells.map(cell => parseInt(cell.slice(1)))));
+        cellCounter++;
+        return {cell: currentCell, value: currentValue};
+      });
+    });
+  } else if (gradientDirection === 'step-rev') {
+    const totalCells = selectRows * selectCols;
+    const step = (maxValue - minValue) / (totalCells - 1);
+    let cellCounter = 0;
+    gradientValues = Array.from({length: selectRows}, (_, rowIndex) => {
+      return Array.from({length: selectCols}, (_, colIndex) => {
+        const currentValue = (maxValue - (cellCounter * step)).toFixed(2);
+        const currentCell = String.fromCharCode(65 + minRowLetter + rowIndex) + (colIndex + Math.min(...selected_cells.map(cell => parseInt(cell.slice(1)))));
+        cellCounter++;
+        return {cell: currentCell, value: currentValue};
+      });
+    });
+  } else if (gradientDirection === 'zig-zag') {
+    const totalCells = selectRows * selectCols;
+    const step = (maxValue - minValue) / (totalCells - 1);
+    let cellCounter = 0;
+    gradientValues = Array.from({length: selectRows}, (_, rowIndex) => {
+      return Array.from({length: selectCols}, (_, colIndex) => {
+        const currentValue = (minValue + (cellCounter * step)).toFixed(2);
+        const currentCell = String.fromCharCode(65 + minRowLetter + rowIndex) + 
+          (rowIndex % 2 === 0 ? colIndex + 1 : selectCols - colIndex);
+        cellCounter++;
+        return {cell: currentCell, value: currentValue};
+      });
+    }).flat();
+  } else if (gradientDirection === 'zig-rev') {
+    const totalCells = selectRows * selectCols;
+    const step = (maxValue - minValue) / (totalCells - 1);
+    let cellCounter = 0;
+    gradientValues = Array.from({length: selectRows}, (_, rowIndex) => {
+      return Array.from({length: selectCols}, (_, colIndex) => {
+        const currentValue = (maxValue - (cellCounter * step)).toFixed(2);
+        const currentCell = String.fromCharCode(65 + minRowLetter + rowIndex) + 
+          (rowIndex % 2 === 0 ? colIndex + 1 : selectCols - colIndex);
+        cellCounter++;
+        return {cell: currentCell, value: currentValue};
+      });
+    }).flat();
   } else {
     throw new Error(`Invalid gradientDirection "${gradientDirection}"`);
   }
